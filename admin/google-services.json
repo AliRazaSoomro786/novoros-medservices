@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "807930918001",
+    "firebase_url": "https://novoros-77294-default-rtdb.firebaseio.com",
+    "project_id": "novoros-77294",
+    "storage_bucket": "novoros-77294.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807930918001:android:f70ea94f35b1d0aff657d0",
+        "android_client_info": {
+          "package_name": "com.novoros.admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "807930918001-ugjd7djv0lnsnqt381go9edeo5nuahqn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDymmhUR9d7MPiBy94_cryUVTguvQn-HIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "807930918001-ugjd7djv0lnsnqt381go9edeo5nuahqn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807930918001:android:77a151b795356d88f657d0",
+        "android_client_info": {
+          "package_name": "com.novoros.ars"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "807930918001-ugjd7djv0lnsnqt381go9edeo5nuahqn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDymmhUR9d7MPiBy94_cryUVTguvQn-HIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "807930918001-ugjd7djv0lnsnqt381go9edeo5nuahqn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807930918001:android:1a87cfc37a5dbb01f657d0",
+        "android_client_info": {
+          "package_name": "com.novoros.common"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "807930918001-ugjd7djv0lnsnqt381go9edeo5nuahqn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDymmhUR9d7MPiBy94_cryUVTguvQn-HIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "807930918001-ugjd7djv0lnsnqt381go9edeo5nuahqn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
