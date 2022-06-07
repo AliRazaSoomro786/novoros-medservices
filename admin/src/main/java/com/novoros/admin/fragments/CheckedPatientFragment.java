@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.novoros.admin.R;
 import com.novoros.admin.adapters.PatientAdapter;
+import com.novoros.common.FirebaseHelper;
 import com.novoros.common.Schedule;
 
 import java.util.ArrayList;
@@ -50,6 +51,23 @@ public class CheckedPatientFragment extends Fragment {
     }
 
     private void loadSchedules() {
+        mPb.setVisibility(View.VISIBLE);
 
+        FirebaseHelper.getSchedules(new FirebaseHelper.ISchedules() {
+            @Override
+            public void onSchedules(List<Schedule> newSchedules) {
+                schedules.clear();
+                schedules.addAll(newSchedules);
+                mAdapter.notifyDataSetChanged();
+
+                Log.d(TAG, "onSchedules: " + newSchedules.size());
+            }
+
+
+            @Override
+            public void onFirebaseError(String error) {
+                Log.d(TAG, "onFirebaseError: " + error);
+            }
+        });
     }
 }

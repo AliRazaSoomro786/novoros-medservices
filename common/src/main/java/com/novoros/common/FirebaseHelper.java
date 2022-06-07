@@ -65,8 +65,12 @@ public class FirebaseHelper {
                 addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        schedules.clear();
+
                         if (snapshot.getValue() == null) listener.onSchedules(schedules);
+
                         for (DataSnapshot snap : snapshot.getChildren()) {
+
                             String date = getValue(KEYS.date.toString(), snap);
                             String description = getValue(KEYS.description.toString(), snap);
 
