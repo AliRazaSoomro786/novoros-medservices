@@ -9,6 +9,10 @@ public class Schedule {
 
     private String key;
 
+    public Schedule() {
+
+    }
+
     public Schedule(String key, boolean checked, String date, String description, String name, String time) {
         this.checked = checked;
         this.key = key;
@@ -16,6 +20,10 @@ public class Schedule {
         this.description = description;
         this.name = name;
         this.time = time;
+    }
+
+    public String getKey() {
+        return key;
     }
 
     public boolean isChecked() {

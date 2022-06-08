@@ -1,5 +1,6 @@
 package com.novoros.admin.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,9 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.novoros.admin.EditPatientActivity;
 import com.novoros.admin.R;
 import com.novoros.admin.adapters.PatientAdapter;
 import com.novoros.common.FirebaseHelper;
+import com.novoros.common.Global;
 import com.novoros.common.Schedule;
 
 import java.util.ArrayList;
@@ -21,11 +24,8 @@ import java.util.List;
 
 public class NewPatientsFragment extends Fragment {
     private final static String TAG = NewPatientsFragment.class.getSimpleName();
-
-    private PatientAdapter mAdapter;
-
     private final List<Schedule> schedules = new ArrayList<>();
-
+    private PatientAdapter mAdapter;
     private ProgressBar mPb;
 
     @Override
@@ -36,7 +36,8 @@ public class NewPatientsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
 
         mAdapter = new PatientAdapter(schedules, true, schedule -> {
-            Log.d(TAG, "onCreateView: " + schedule);
+            Global.schedule = schedule;
+            startActivity(new Intent(inflater.getContext(), EditPatientActivity.class));
         });
 
         recyclerView.setAdapter(mAdapter);
@@ -74,7 +75,7 @@ public class NewPatientsFragment extends Fragment {
                 mPb.setVisibility(View.GONE);
                 Log.d(TAG, "onFirebaseError: " + error);
             }
-        },false);
+        }, false);
     }
 
 }

@@ -14,18 +14,20 @@ import com.novoros.admin.fragments.NewPatientsFragment;
 public class MainActivity extends AppCompatActivity {
     private final static String TAG = MainActivity.class.getSimpleName();
 
+    private int selectedFragment = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        showFragment(0);
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                selectedFragment = tab.getPosition();
                 showFragment(tab.getPosition());
             }
 
@@ -44,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.actionAddPatient).setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, AddPatientActivity.class));
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showFragment(selectedFragment);
     }
 
     private void showFragment(int position) {
