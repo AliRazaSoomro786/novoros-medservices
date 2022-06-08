@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/purple_200"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
@@ -82,4 +83,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.94" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:text="May 2022"
+        android:rotation="-90"
+        android:textColor="@color/white"
+        android:textSize="@dimen/x_large"
+        tools:layout_editor_absoluteX="-23dp"
+        tools:layout_editor_absoluteY="131dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
