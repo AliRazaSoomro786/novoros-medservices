@@ -76,7 +76,7 @@ public class FirebaseHelper {
 
                             Boolean checked = (Boolean) snap.child(KEYS.checked.toString()).getValue();
                             if (checked == null) checked = false;
-                            if (!checked) continue;
+                            if (checked) continue;
 
                             String date = getValue(KEYS.date.toString(), snap);
                             String description = getValue(KEYS.description.toString(), snap);
