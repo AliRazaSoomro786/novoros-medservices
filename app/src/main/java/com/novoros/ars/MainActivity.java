@@ -4,15 +4,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.novoros.common.FirebaseHelper;
+import com.novoros.common.KEYS;
 import com.novoros.common.Schedule;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,7 +36,19 @@ public class MainActivity extends AppCompatActivity {
         schedule_recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mAdapter = new ScheduleAdapter(schedules, schedule -> {
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put(KEYS.checked.toString(), true);
+            FirebaseHelper.update(hashMap, schedule.getKey(), new FirebaseHelper.IFirebaseListener() {
+                @Override
+                public void onSuccess() {
+                    Toast.makeText(MainActivity.this, "Patient Marked as checked", Toast.LENGTH_SHORT).show();
+                }
 
+                @Override
+                public void onFirebaseError(String error) {
+                    Log.d(TAG, "onFirebaseError: " + error);
+                }
+            });
         });
 
         schedule_recyclerView.setAdapter(mAdapter);

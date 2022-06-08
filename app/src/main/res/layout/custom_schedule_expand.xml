@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    android:background="@drawable/patient_item_bg"
+    android:elevation="5dp">
+
+    <TextView
+        android:id="@+id/patient_name_expand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="monospace"
+        android:text="Android developer"
+        android:textColor="@color/white"
+        android:textSize="@dimen/large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.063" />
+
+    <TextView
+        android:id="@+id/preview_time_expand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="6:15 - 7:15"
+        android:textColor="@color/white"
+        android:textSize="@dimen/medium"
+        app:layout_constraintEnd_toEndOf="@+id/patient_name_expand"
+        app:layout_constraintStart_toStartOf="@+id/patient_name_expand"
+        app:layout_constraintTop_toBottomOf="@+id/patient_name_expand" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:text="Mark as checked"
+        android:textColor="@color/white"
+        android:textSize="@dimen/normal"
+        app:layout_constraintBottom_toTopOf="@+id/preview_time_expand"
+        app:layout_constraintEnd_toStartOf="@+id/checkBox_expand"
+        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/patient_name_expand"
+        app:layout_constraintTop_toTopOf="@+id/patient_name_expand" />
+
+    <CheckBox
+        android:id="@+id/checkBox_expand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:buttonTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="monospace"
+        android:text="What to do?"
+        android:textColor="@color/white"
+        android:textSize="@dimen/large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/preview_time_expand" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/patient_description_expand"
+        android:fontFamily="monospace"
+        android:text="Android developer always write code by using android studio this is the too that is right now developer using for native android os apps"
+        android:textColor="@color/white"
+        android:textSize="@dimen/normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.04000002" />
+</androidx.constraintlayout.widget.ConstraintLayout>
