@@ -21,11 +21,8 @@ import java.util.List;
 
 public class CheckedPatientFragment extends Fragment {
     private final static String TAG = CheckedPatientFragment.class.getSimpleName();
-
-    private PatientAdapter mAdapter;
-
     private final List<Schedule> schedules = new ArrayList<>();
-
+    private PatientAdapter mAdapter;
     private ProgressBar mPb;
 
     @Override
@@ -38,6 +35,8 @@ public class CheckedPatientFragment extends Fragment {
         mAdapter = new PatientAdapter(schedules, false, schedule -> {
             Log.d(TAG, "onCreateView: " + schedule);
         });
+
+        recyclerView.setAdapter(mAdapter);
 
         mPb = view.findViewById(R.id.progressBar);
 
@@ -56,6 +55,8 @@ public class CheckedPatientFragment extends Fragment {
         FirebaseHelper.getSchedules(new FirebaseHelper.ISchedules() {
             @Override
             public void onSchedules(List<Schedule> newSchedules) {
+                mPb.setVisibility(View.GONE);
+
                 schedules.clear();
                 schedules.addAll(newSchedules);
                 mAdapter.notifyDataSetChanged();
@@ -66,8 +67,9 @@ public class CheckedPatientFragment extends Fragment {
 
             @Override
             public void onFirebaseError(String error) {
+                mPb.setVisibility(View.GONE);
                 Log.d(TAG, "onFirebaseError: " + error);
             }
-        });
+        }, true);
     }
 }

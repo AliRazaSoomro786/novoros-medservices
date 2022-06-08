@@ -24,7 +24,7 @@ public class FirebaseHelper {
         else return "";
     }
 
-    public static void getSchedules(ISchedules listener) {
+    public static void getSchedules(ISchedules listener, boolean isChecked) {
         List<Schedule> schedules = new ArrayList<>();
 
         reference().child(KEYS.schedules.toString()).
@@ -33,14 +33,17 @@ public class FirebaseHelper {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.getValue() == null) listener.onSchedules(schedules);
                         for (DataSnapshot snap : snapshot.getChildren()) {
+                            Boolean checked = (Boolean) snap.child(KEYS.checked.toString()).getValue();
+                            if (checked == null) checked = false;
+
+                            if (checked != isChecked) continue;
+
                             String date = getValue(KEYS.date.toString(), snap);
                             String description = getValue(KEYS.description.toString(), snap);
 
                             String name = getValue(KEYS.name.toString(), snap);
                             String time = getValue(KEYS.time.toString(), snap);
 
-                            Boolean checked = (Boolean) snap.child(KEYS.checked.toString()).getValue();
-                            if (checked == null) checked = false;
 
                             schedules.add(new Schedule(snap.getKey(), checked, date, description, name, time));
                         }
@@ -58,7 +61,7 @@ public class FirebaseHelper {
 
     }
 
-    public static void getScheduleUpdates(ISchedules listener) {
+    public static void getScheduleUpdates(ISchedules listener, boolean isChecked) {
         List<Schedule> schedules = new ArrayList<>();
 
         reference().child(KEYS.schedules.toString()).
@@ -71,14 +74,16 @@ public class FirebaseHelper {
 
                         for (DataSnapshot snap : snapshot.getChildren()) {
 
+                            Boolean checked = (Boolean) snap.child(KEYS.checked.toString()).getValue();
+                            if (checked == null) checked = false;
+                            if (isChecked != checked) continue;
+
                             String date = getValue(KEYS.date.toString(), snap);
                             String description = getValue(KEYS.description.toString(), snap);
 
                             String name = getValue(KEYS.name.toString(), snap);
                             String time = getValue(KEYS.time.toString(), snap);
 
-                            Boolean checked = (Boolean) snap.child(KEYS.checked.toString()).getValue();
-                            if (checked == null) checked = false;
 
                             schedules.add(new Schedule(snap.getKey(), checked, date, description, name, time));
                         }

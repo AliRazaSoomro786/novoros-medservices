@@ -39,6 +39,8 @@ public class NewPatientsFragment extends Fragment {
             Log.d(TAG, "onCreateView: " + schedule);
         });
 
+        recyclerView.setAdapter(mAdapter);
+
         mPb = view.findViewById(R.id.progressBar);
 
         return view;
@@ -51,7 +53,7 @@ public class NewPatientsFragment extends Fragment {
     }
 
     private void loadSchedules() {
-//        mPb.setVisibility(View.VISIBLE);
+        mPb.setVisibility(View.VISIBLE);
 
         FirebaseHelper.getScheduleUpdates(new FirebaseHelper.ISchedules() {
             @Override
@@ -72,7 +74,7 @@ public class NewPatientsFragment extends Fragment {
                 mPb.setVisibility(View.GONE);
                 Log.d(TAG, "onFirebaseError: " + error);
             }
-        });
+        },false);
     }
 
 }
