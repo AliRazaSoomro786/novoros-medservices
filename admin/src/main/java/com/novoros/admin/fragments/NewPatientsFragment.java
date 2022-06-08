@@ -51,21 +51,25 @@ public class NewPatientsFragment extends Fragment {
     }
 
     private void loadSchedules() {
-        mPb.setVisibility(View.VISIBLE);
+//        mPb.setVisibility(View.VISIBLE);
 
         FirebaseHelper.getScheduleUpdates(new FirebaseHelper.ISchedules() {
             @Override
             public void onSchedules(List<Schedule> newSchedules) {
+                mPb.setVisibility(View.GONE);
+
                 schedules.clear();
                 schedules.addAll(newSchedules);
                 mAdapter.notifyDataSetChanged();
 
                 Log.d(TAG, "onSchedules: " + newSchedules.size());
+
             }
 
 
             @Override
             public void onFirebaseError(String error) {
+                mPb.setVisibility(View.GONE);
                 Log.d(TAG, "onFirebaseError: " + error);
             }
         });

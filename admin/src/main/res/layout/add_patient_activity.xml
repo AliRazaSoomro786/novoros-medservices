@@ -224,7 +224,8 @@
     <Button
         android:id="@+id/actionAddPatientDetails"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:background="@drawable/button_bg"
         android:fontFamily="monospace"
         android:text="Add Patient"
         android:textAllCaps="false"

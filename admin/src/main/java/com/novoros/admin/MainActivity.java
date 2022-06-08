@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        showFragment(0);
+
         TabLayout tabLayout = findViewById(R.id.tabLayout);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

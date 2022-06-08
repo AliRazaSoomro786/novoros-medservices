@@ -1,9 +1,16 @@
 package com.novoros.admin;
 
+import android.app.AlertDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -18,6 +25,8 @@ import java.util.concurrent.TimeUnit;
 
 public class AddPatientActivity extends AppCompatActivity {
     private final static String TAG = AddPatientActivity.class.getSimpleName();
+    private String selectedDate = "";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +41,8 @@ public class AddPatientActivity extends AppCompatActivity {
         TextView startTime = findViewById(R.id.startTime);
         TextView endTime = findViewById(R.id.endTime);
 
-        String selectedDate = "";
+        startTime.setOnClickListener(v -> timePicker(startTime));
+        endTime.setOnClickListener(v -> timePicker(endTime));
 
         findViewById(R.id.actionAddPatientDetails).setOnClickListener(v -> {
             String name = texture_name.getText().toString();
@@ -83,9 +93,50 @@ public class AddPatientActivity extends AppCompatActivity {
 
         });
 
-
-        findViewById(R.id.actionAddPatientDetails).setOnClickListener(v -> {
-
+        findViewById(R.id.actionDatePicker).setOnClickListener(v -> {
+            datePicker();
         });
     }
+
+    private void datePicker() {
+        LayoutInflater factory = LayoutInflater.from(this);
+
+        final View mView = factory.inflate(R.layout.custom_date_picker, null);
+        final AlertDialog dialog = new AlertDialog.Builder(this).create();
+
+        DatePicker datePicker = mView.findViewById(R.id.datePicker);
+
+        datePicker.setOnDateChangedListener((view, year, monthOfYear, dayOfMonth) -> {
+            int month = monthOfYear + 1;
+            selectedDate = dayOfMonth + "-" + month + "-" + year;
+
+            dialog.dismiss();
+        });
+
+        dialog.setView(mView);
+        dialog.setCancelable(false);
+
+        dialog.show();
+    }
+
+    private void timePicker(TextView textView) {
+        LayoutInflater factory = LayoutInflater.from(this);
+
+        final View mView = factory.inflate(R.layout.time_picker, null);
+        final AlertDialog dialog = new AlertDialog.Builder(this).create();
+
+        TimePicker timePicker = mView.findViewById(R.id.timePicker);
+
+        timePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> {
+            textView.setText(hourOfDay + " : " + minute);
+        });
+
+        mView.findViewById(R.id.actionNext).setOnClickListener(v -> dialog.dismiss());
+
+        dialog.setView(mView);
+        dialog.setCancelable(false);
+
+        dialog.show();
+    }
+
 }
