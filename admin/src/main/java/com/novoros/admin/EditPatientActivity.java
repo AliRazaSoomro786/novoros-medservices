@@ -1,6 +1,8 @@
 package com.novoros.admin;
 
 import android.app.AlertDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,18 +54,7 @@ public class EditPatientActivity extends AppCompatActivity {
         selectedDate = Global.schedule.getDate();
 
         findViewById(R.id.actionDeletePatient).setOnClickListener(v -> {
-            FirebaseHelper.delete(Global.schedule.getKey(), new FirebaseHelper.IFirebaseListener() {
-                @Override
-                public void onSuccess() {
-                    Toast.makeText(EditPatientActivity.this, "Record deleted", Toast.LENGTH_SHORT).show();
-                    Executors.newSingleThreadScheduledExecutor().schedule(() -> finish(), 1, TimeUnit.SECONDS);
-                }
-
-                @Override
-                public void onFirebaseError(String error) {
-
-                }
-            });
+            delete();
         });
 
         findViewById(R.id.actionAddPatientDetails).setOnClickListener(v -> {
@@ -98,6 +89,7 @@ public class EditPatientActivity extends AppCompatActivity {
             hashMap.put(KEYS.description.toString(), description);
             hashMap.put(KEYS.date.toString(), selectedDate);
             hashMap.put(KEYS.time.toString(), sTime + " - " + eTime);
+            hashMap.put(KEYS.checked.toString(), false);
 
             FirebaseHelper.update(hashMap, Global.schedule.getKey(), new FirebaseHelper.IFirebaseListener() {
                 @Override
@@ -154,6 +146,40 @@ public class EditPatientActivity extends AppCompatActivity {
         });
 
         mView.findViewById(R.id.actionNext).setOnClickListener(v -> dialog.dismiss());
+
+        dialog.setView(mView);
+        dialog.setCancelable(false);
+
+        dialog.show();
+    }
+
+    private void delete() {
+        LayoutInflater factory = LayoutInflater.from(this);
+
+        final View mView = factory.inflate(R.layout.schedule_delete_dialog, null);
+        final AlertDialog dialog = new AlertDialog.Builder(this).create();
+
+        mView.findViewById(R.id.actionDeletePatientDialog).setOnClickListener(v -> {
+            FirebaseHelper.delete(Global.schedule.getKey(), new FirebaseHelper.IFirebaseListener() {
+                @Override
+                public void onSuccess() {
+                    dialog.dismiss();
+                    Toast.makeText(EditPatientActivity.this, "Record deleted", Toast.LENGTH_SHORT).show();
+                    Executors.newSingleThreadScheduledExecutor().schedule(() -> finish(), 1, TimeUnit.SECONDS);
+                }
+
+                @Override
+                public void onFirebaseError(String error) {
+                    dialog.dismiss();
+                    Log.d(TAG, "onFirebaseError: " + error);
+                }
+            });
+
+        });
+        mView.findViewById(R.id.actionCancleDelete).setOnClickListener(v -> dialog.dismiss());
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
 
         dialog.setView(mView);
         dialog.setCancelable(false);

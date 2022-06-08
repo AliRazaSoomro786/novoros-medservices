@@ -76,6 +76,7 @@ public class AddPatientActivity extends AppCompatActivity {
             hashMap.put(KEYS.description.toString(), description);
             hashMap.put(KEYS.date.toString(), selectedDate);
             hashMap.put(KEYS.time.toString(), sTime + " - " + eTime);
+            hashMap.put(KEYS.checked.toString(),false);
 
             FirebaseHelper.insert(hashMap, new FirebaseHelper.IFirebaseListener() {
                 @Override
