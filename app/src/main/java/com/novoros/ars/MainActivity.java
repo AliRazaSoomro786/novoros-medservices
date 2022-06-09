@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.novoros.common.FirebaseHelper;
 import com.novoros.common.KEYS;
 import com.novoros.common.Schedule;
+
+import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,6 +63,18 @@ public class MainActivity extends AppCompatActivity {
         schedule_recyclerView.setAdapter(mAdapter);
 
         mPb = findViewById(R.id.progressBar);
+
+        TextView preview_date_year = findViewById(R.id.preview_date_year);
+        TextView preview_date_year_day = findViewById(R.id.preview_date_year_day);
+
+        DateTime dateTime = DateTime.now();
+        String month =dateTime. monthOfYear().getAsShortText();
+        int year = dateTime.getYear();
+        String day = dateTime.dayOfWeek().getAsText();
+        int date = dateTime.getDayOfMonth();
+
+        preview_date_year.setText(month + " " + year);
+        preview_date_year_day.setText(date + " " + month + "-" + day);
 
     }
 

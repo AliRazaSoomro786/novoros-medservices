@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/purple_200"
     android:layout_height="match_parent"
+    android:background="@color/purple_200"
     tools:context=".MainActivity">
-
+    
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
@@ -63,10 +63,10 @@
         app:layout_constraintTop_toTopOf="@+id/view" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/schedule_recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="5dp"
-        android:id="@+id/schedule_recyclerView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/view2"
@@ -83,14 +83,38 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.94" />
 
-    <TextView
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="serif"
-        android:text="May 2022"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.03" />
+
+    <TextView
+        android:id="@+id/preview_date_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
         android:rotation="-90"
+        android:text="May 2022"
         android:textColor="@color/white"
-        android:textSize="@dimen/x_large"
-        tools:layout_editor_absoluteX="-23dp"
-        tools:layout_editor_absoluteY="131dp" />
+        android:textSize="@dimen/large"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/preview_date_year_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:rotation="-90"
+        android:text="2 MAY - TUESDAY"
+        android:textColor="@color/white"
+        android:textSize="@dimen/large"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintEnd_toEndOf="@+id/view2"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
