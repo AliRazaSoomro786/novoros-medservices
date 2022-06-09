@@ -46,35 +46,31 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             if (position % 2 == 0)
                 holder.itemView.setBackgroundResource(R.drawable.patient_item_bg_dark);
 
-            if (!checked) {
-                holder.itemView.setOnClickListener(v -> {
-                    if (checked) return;
-                    if (holder.normalGroup.getVisibility() == View.VISIBLE) {
-                        holder.normalGroup.setVisibility(View.GONE);
-                        holder.expandGroup.setVisibility(View.VISIBLE);
-                    } else {
-                        holder.normalGroup.setVisibility(View.VISIBLE);
-                        holder.expandGroup.setVisibility(View.GONE);
-                    }
+            holder.itemView.setOnClickListener(v -> {
+                if (checked) return;
+                if (holder.normalGroup.getVisibility() == View.VISIBLE) {
+                    holder.normalGroup.setVisibility(View.GONE);
+                    holder.expandGroup.setVisibility(View.VISIBLE);
+                } else {
+                    holder.normalGroup.setVisibility(View.VISIBLE);
+                    holder.expandGroup.setVisibility(View.GONE);
+                }
 
 
-                });
-
-                holder.expandCheckbox.setOnClickListener(v1 -> listener.onItemClick(schedule));
-                holder.expandName.setText(schedule.getName());
-                holder.expandDescription.setText(schedule.getDescription());
-                holder.expandTime.setText(schedule.getTime());
-
-            }
+            });
 
             if (checked) {
                 holder.expandGroup.setVisibility(View.GONE);
                 holder.normalGroup.setVisibility(View.VISIBLE);
+
+                holder.name.setText(schedule.getName());
+                holder.time.setText(schedule.getTime());
+            } else {
+                holder.expandCheckbox.setOnClickListener(v1 -> listener.onItemClick(schedule));
+                holder.expandName.setText(schedule.getName());
+                holder.expandDescription.setText(schedule.getDescription());
+                holder.expandTime.setText(schedule.getTime());
             }
-
-
-            holder.name.setText(schedule.getName());
-            holder.time.setText(schedule.getTime());
 
 
         } catch (Exception e) {
