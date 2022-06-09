@@ -19,12 +19,16 @@ import java.util.List;
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHolder> {
     private final List<Schedule> schedules;
     private final ISchedule listener;
-
     private final String TAG = ScheduleAdapter.class.getName();
+    public boolean checked = false;
 
     public ScheduleAdapter(List<Schedule> list, ISchedule listener) {
         this.schedules = list;
         this.listener = listener;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 
     @NonNull
@@ -37,32 +41,41 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         try {
+            Schedule schedule = schedules.get(position);
+
             if (position % 2 == 0)
                 holder.itemView.setBackgroundResource(R.drawable.patient_item_bg_dark);
 
-            holder.itemView.setOnClickListener(v -> {
-                if (holder.normalGroup.getVisibility() == View.VISIBLE) {
-                    holder.normalGroup.setVisibility(View.GONE);
-                    holder.expandGroup.setVisibility(View.VISIBLE);
-                } else {
-                    holder.normalGroup.setVisibility(View.VISIBLE);
-                    holder.expandGroup.setVisibility(View.GONE);
-                }
-            });
+            if (!checked) {
+                holder.itemView.setOnClickListener(v -> {
+                    if (checked) return;
+                    if (holder.normalGroup.getVisibility() == View.VISIBLE) {
+                        holder.normalGroup.setVisibility(View.GONE);
+                        holder.expandGroup.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.normalGroup.setVisibility(View.VISIBLE);
+                        holder.expandGroup.setVisibility(View.GONE);
+                    }
 
-            Schedule schedule = schedules.get(position);
+
+                });
+
+                holder.expandCheckbox.setOnClickListener(v1 -> listener.onItemClick(schedule));
+                holder.expandName.setText(schedule.getName());
+                holder.expandDescription.setText(schedule.getDescription());
+                holder.expandTime.setText(schedule.getTime());
+
+            }
+
+            if (checked) {
+                holder.expandGroup.setVisibility(View.GONE);
+                holder.normalGroup.setVisibility(View.VISIBLE);
+            }
+
+
             holder.name.setText(schedule.getName());
             holder.time.setText(schedule.getTime());
 
-
-            holder.expandName.setText(schedule.getName());
-            holder.expandDescription.setText(schedule.getDescription());
-            holder.expandTime.setText(schedule.getTime());
-
-            holder.expandCheckbox.setOnClickListener(v -> {
-                listener.onItemClick(schedule);
-
-            });
 
         } catch (Exception e) {
             Log.e(TAG, "onBindViewHolder: ", e);

@@ -124,6 +124,7 @@
         android:id="@+id/menue_group"
         layout="@layout/custom_menue"
         android:layout_width="wrap_content"
+        android:elevation="5dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/action_more"
         app:layout_constraintTop_toTopOf="@+id/action_more" />

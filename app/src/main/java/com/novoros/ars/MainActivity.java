@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             loadSchedules(false);
         });
 
-        schedule_recyclerView.setOnClickListener(v -> menu_group.setVisibility(View.GONE));
+        findViewById(R.id.view).setOnClickListener(v -> menu_group.setVisibility(View.GONE));
 
     }
 
@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSchedules(List<Schedule> newSchedules) {
                 mPb.setVisibility(View.GONE);
+                mAdapter.setChecked(checked);
 
                 schedules.clear();
                 schedules.addAll(newSchedules);
