@@ -47,6 +47,39 @@ public class NewPatientsFragment extends Fragment {
         return view;
     }
 
+    public void search(String string) {
+        filter(string);
+    }
+
+    private void filter(CharSequence charSequence) {
+        List<Schedule> mFilteredList;
+
+        String charString = charSequence.toString().toLowerCase();
+        if (charString.isEmpty()) {
+
+            mFilteredList = this.schedules;
+        } else {
+
+            List<Schedule> filteredList = new ArrayList<>();
+
+            for (Schedule schedule : schedules) {
+
+                if (schedule.getName().toLowerCase().contains(charString)
+                        || schedule.getDescription().toLowerCase().contains(charString)
+                        || schedule.getTime().toLowerCase().contains(charString)) {
+
+                    filteredList.add(schedule);
+                }
+            }
+
+            mFilteredList = filteredList;
+        }
+
+        mAdapter.schedules = mFilteredList;
+        mAdapter.notifyDataSetChanged();
+    }
+
+
     @Override
     public void onResume() {
         super.onResume();

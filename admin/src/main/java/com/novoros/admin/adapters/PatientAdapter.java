@@ -16,7 +16,7 @@ import java.util.List;
 
 
 public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHolder> {
-    private final List<Schedule> schedules;
+    public List<Schedule> schedules;
     private final IPatientAdapter listener;
 
     private final boolean clickable;

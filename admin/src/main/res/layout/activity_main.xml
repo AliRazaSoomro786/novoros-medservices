@@ -26,6 +26,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/actionSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_search_24"
@@ -85,6 +86,7 @@
     </FrameLayout>
 
     <View
+        android:id="@+id/view4"
         android:layout_width="402dp"
         android:layout_height="2dp"
         android:background="@color/purple_200"
@@ -105,4 +107,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout"
         app:layout_constraintVertical_bias="0.965" />
+
+    <androidx.constraintlayout.widget.Group
+        android:layout_width="wrap_content"
+        android:id="@+id/search_group"
+        android:visibility="gone"
+        app:constraint_referenced_ids="search_view"
+        android:layout_height="wrap_content"/>
+    <include
+        android:id="@+id/search_view"
+        layout="@layout/custom_search_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
