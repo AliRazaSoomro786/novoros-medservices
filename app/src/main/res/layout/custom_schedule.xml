@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="2dp"
+    android:layout_margin="5dp"
     android:background="@drawable/patient_item_bg"
     android:elevation="5dp">
 
@@ -30,7 +30,7 @@
         android:fontFamily="monospace"
         android:text="Android developer"
         android:textColor="@color/white"
-        android:textSize="@dimen/x_large"
+        android:textSize="@dimen/xx_large"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:text="6:15 - 7:15"
         android:textColor="@color/white"
-        android:textSize="@dimen/x_large"
+        android:textSize="@dimen/xx_large"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/patient_name"
         app:layout_constraintEnd_toEndOf="parent"

@@ -3,6 +3,6 @@
     <dimen name="medium">16sp</dimen>
     <dimen name="large">18sp</dimen>
     <dimen name="x_large">20sp</dimen>
-    <dimen name="xx_large">22sp</dimen>
+    <dimen name="xx_large">26sp</dimen>
     <dimen name="normal">14sp</dimen>
 </resources>
