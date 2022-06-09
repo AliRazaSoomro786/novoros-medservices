@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NovorosMedicalServices">
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +27,10 @@
         <activity
             android:name=".EditPatientActivity"
             android:exported="true" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+
     </application>
 
 </manifest>
