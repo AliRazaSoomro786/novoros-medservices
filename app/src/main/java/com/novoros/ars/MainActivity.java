@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Group;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new ScheduleAdapter(schedules, schedule -> {
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put(KEYS.checked.toString(), true);
+
             FirebaseHelper.update(hashMap, schedule.getKey(), new FirebaseHelper.IFirebaseListener() {
                 @Override
                 public void onSuccess() {
@@ -68,23 +69,44 @@ public class MainActivity extends AppCompatActivity {
         TextView preview_date_year_day = findViewById(R.id.preview_date_year_day);
 
         DateTime dateTime = DateTime.now();
-        String month =dateTime. monthOfYear().getAsShortText();
-        int year = dateTime.getYear();
+
+        String month = dateTime.monthOfYear().getAsShortText();
         String day = dateTime.dayOfWeek().getAsText();
+
         int date = dateTime.getDayOfMonth();
+        int year = dateTime.getYear();
 
         preview_date_year.setText(month + " " + year);
         preview_date_year_day.setText(date + " " + month + "-" + day);
+
+        Group menu_group = findViewById(R.id.menu_group);
+
+        findViewById(R.id.action_more).setOnClickListener(v -> {
+            if (menu_group.getVisibility() == View.VISIBLE)
+                menu_group.setVisibility(View.GONE);
+            else menu_group.setVisibility(View.VISIBLE);
+        });
+
+        findViewById(R.id.menue_item_checked_patient).setOnClickListener(v -> {
+            menu_group.setVisibility(View.GONE);
+            loadSchedules(true);
+        });
+        findViewById(R.id.menue_item_new_patient).setOnClickListener(v -> {
+            menu_group.setVisibility(View.GONE);
+            loadSchedules(false);
+        });
+
+        schedule_recyclerView.setOnClickListener(v -> menu_group.setVisibility(View.GONE));
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        loadSchedules();
+        loadSchedules(false);
     }
 
-    private void loadSchedules() {
+    private void loadSchedules(boolean checked) {
         mPb.setVisibility(View.VISIBLE);
 
         FirebaseHelper.getScheduleUpdates(new FirebaseHelper.ISchedules() {
@@ -106,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 mPb.setVisibility(View.GONE);
                 Log.d(TAG, "onFirebaseError: " + error);
             }
-        }, false);
+        }, checked);
     }
 
 }
