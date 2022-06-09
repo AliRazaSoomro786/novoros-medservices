@@ -62,15 +62,14 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             if (checked) {
                 holder.expandGroup.setVisibility(View.GONE);
                 holder.normalGroup.setVisibility(View.VISIBLE);
-
-                holder.name.setText(schedule.getName());
-                holder.time.setText(schedule.getTime());
-            } else {
-                holder.expandCheckbox.setOnClickListener(v1 -> listener.onItemClick(schedule));
-                holder.expandName.setText(schedule.getName());
-                holder.expandDescription.setText(schedule.getDescription());
-                holder.expandTime.setText(schedule.getTime());
             }
+
+            holder.name.setText(schedule.getName());
+            holder.time.setText(schedule.getTime());
+            holder.expandCheckbox.setOnClickListener(v1 -> listener.onItemClick(schedule));
+            holder.expandName.setText(schedule.getName());
+            holder.expandDescription.setText(schedule.getDescription());
+            holder.expandTime.setText(schedule.getTime());
 
 
         } catch (Exception e) {
