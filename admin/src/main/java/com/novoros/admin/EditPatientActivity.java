@@ -20,6 +20,8 @@ import com.novoros.common.FirebaseHelper;
 import com.novoros.common.Global;
 import com.novoros.common.KEYS;
 
+import org.joda.time.DateTime;
+
 import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -61,8 +63,8 @@ public class EditPatientActivity extends AppCompatActivity {
             String name = texture_name.getText().toString();
             String description = texture_description.getText().toString();
 
-            String sTime = startTime.getText().toString().replace(" ","");
-            String eTime = endTime.getText().toString().replace(" ","");
+            String sTime = startTime.getText().toString();
+            String eTime = endTime.getText().toString();
 
             if (name.isEmpty()) {
                 Toast.makeText(this, "Enter Patient Name", Toast.LENGTH_SHORT).show();
@@ -81,6 +83,20 @@ public class EditPatientActivity extends AppCompatActivity {
 
             if (selectedDate.isEmpty()) {
                 Toast.makeText(this, "Please select date", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            DateTime dateTime = DateTime.now();
+
+            int sHour = Integer.parseInt(sTime.split(":")[0]);
+            int sMinute = Integer.parseInt(sTime.split(":")[1]);
+
+            int eHour = Integer.parseInt(eTime.split(":")[0]);
+            int eMinute = Integer.parseInt(eTime.split(":")[1]);
+
+            if (dateTime.withHourOfDay(sHour).withMinuteOfHour(sMinute).getMillis() >
+                    dateTime.withHourOfDay(eHour).withMinuteOfHour(eMinute).getMillis()) {
+                Toast.makeText(this, "Please select valid time", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -143,7 +159,11 @@ public class EditPatientActivity extends AppCompatActivity {
         timePicker.setIs24HourView(true);
 
         timePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> {
-            textView.setText(hourOfDay + " : " + minute);
+            if (minute == 0) {
+                textView.setText(hourOfDay + ":" + 00);
+                return;
+            }
+            textView.setText(hourOfDay + ":" + minute);
         });
 
         mView.findViewById(R.id.actionNext).setOnClickListener(v -> dialog.dismiss());

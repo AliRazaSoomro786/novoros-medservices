@@ -20,7 +20,9 @@ import com.novoros.common.Schedule;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -122,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
                     if (isValid(schedule.getDate())) schedules.add(schedule);
                 }
 
+                filterList();
+
                 mAdapter.notifyDataSetChanged();
 
                 Log.d(TAG, "onSchedules: " + newSchedules.size());
@@ -135,6 +139,17 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onFirebaseError: " + error);
             }
         }, checked);
+    }
+
+    private void filterList() {
+        Collections.sort(schedules, (o1, o2) -> {
+            try {
+                return new SimpleDateFormat("hh:mm").parse(o1.getTime().split("-")[0]).compareTo(new SimpleDateFormat("hh:mm").parse(o2.getTime().split("-")[0]));
+            } catch (java.text.ParseException e) {
+                return 0;
+            }
+        });
+
     }
 
     private boolean isValid(String date) {

@@ -48,8 +48,8 @@ public class AddPatientActivity extends AppCompatActivity {
             String name = texture_name.getText().toString();
             String description = texture_description.getText().toString();
 
-            String sTime = startTime.getText().toString().replace(" ", "");
-            String eTime = endTime.getText().toString().replace(" ", "");
+            String sTime = startTime.getText().toString();
+            String eTime = endTime.getText().toString();
 
             if (name.isEmpty()) {
                 Toast.makeText(this, "Enter Patient Name", Toast.LENGTH_SHORT).show();
@@ -144,7 +144,12 @@ public class AddPatientActivity extends AppCompatActivity {
         timePicker.setIs24HourView(true);
 
         timePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> {
-            textView.setText(hourOfDay + " : " + minute);
+            if (minute == 0) {
+                textView.setText(hourOfDay + ":" + 00);
+                return;
+            }
+            textView.setText(hourOfDay + ":" + minute);
+            Log.d(TAG, "timePicker: " + hourOfDay + " : " + minute);
         });
 
         mView.findViewById(R.id.actionNext).setOnClickListener(v -> dialog.dismiss());
