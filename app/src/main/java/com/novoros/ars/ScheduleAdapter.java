@@ -43,8 +43,11 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         try {
             Schedule schedule = schedules.get(position);
 
-            if (position % 2 == 0)
-                holder.itemView.setBackgroundResource(R.drawable.patient_item_bg_dark);
+            int pos = position + 1;
+            holder.mPosition.setText(pos + " . ");
+
+//            if (position % 2 == 0)
+//                holder.itemView.setBackgroundResource(R.drawable.patient_item_bg_dark);
 
             holder.itemView.setOnClickListener(v -> {
                 if (checked) return;
@@ -92,12 +95,16 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         private final TextView expandName, expandTime, expandDescription;
         private final CheckBox expandCheckbox;
 
+        private final TextView mPosition;
+
         private Group normalGroup, expandGroup;
 
         public ViewHolder(@NonNull View view) {
             super(view);
             name = view.findViewById(R.id.patient_name);
             time = view.findViewById(R.id.preview_time);
+
+            mPosition = view.findViewById(R.id.preview_position);
 
             expandName = view.findViewById(R.id.patient_name_expand);
             expandTime = view.findViewById(R.id.preview_time_expand);

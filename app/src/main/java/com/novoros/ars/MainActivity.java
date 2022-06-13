@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Group;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.novoros.common.FirebaseHelper;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         RecyclerView schedule_recyclerView = findViewById(R.id.schedule_recyclerView);
-        schedule_recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        schedule_recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         mAdapter = new ScheduleAdapter(schedules, schedule -> {
             HashMap<String, Object> hashMap = new HashMap<>();

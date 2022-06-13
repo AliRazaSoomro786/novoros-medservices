@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="2dp"
     android:background="@drawable/patient_item_bg"
-    android:elevation="5dp">
+    android:elevation="1dp">
 
     <TextView
         android:id="@+id/patient_name_expand"

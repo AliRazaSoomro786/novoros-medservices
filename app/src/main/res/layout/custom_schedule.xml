@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:background="@drawable/patient_item_bg"
-    android:elevation="5dp">
+    android:elevation="1dp">
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/normal_view"
@@ -22,20 +22,31 @@
         app:constraint_referenced_ids="expand_schedule" />
 
     <TextView
+        android:id="@+id/preview_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/x_large"
+        app:layout_constraintBottom_toBottomOf="@+id/patient_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/patient_name" />
+
+    <TextView
         android:id="@+id/patient_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:fontFamily="monospace"
         android:text="Android developer"
         android:textColor="@color/white"
-        android:textSize="@dimen/xx_large"
-        android:textStyle="bold"
+        android:textSize="@dimen/large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toEndOf="@+id/preview_position"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -44,8 +55,7 @@
         android:layout_height="wrap_content"
         android:text="6:15 - 7:15"
         android:textColor="@color/white"
-        android:textSize="@dimen/xx_large"
-        android:textStyle="bold"
+        android:textSize="@dimen/large"
         app:layout_constraintBottom_toBottomOf="@+id/patient_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.93"
