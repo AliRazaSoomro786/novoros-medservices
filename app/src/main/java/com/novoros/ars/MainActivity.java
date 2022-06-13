@@ -18,6 +18,7 @@ import com.novoros.common.KEYS;
 import com.novoros.common.Schedule;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
             menu_group.setVisibility(View.GONE);
             loadSchedules(true);
         });
+
         findViewById(R.id.menue_item_new_patient).setOnClickListener(v -> {
             menu_group.setVisibility(View.GONE);
             loadSchedules(false);
@@ -114,9 +116,12 @@ public class MainActivity extends AppCompatActivity {
             public void onSchedules(List<Schedule> newSchedules) {
                 mPb.setVisibility(View.GONE);
                 mAdapter.setChecked(checked);
-
                 schedules.clear();
-                schedules.addAll(newSchedules);
+
+                for (Schedule schedule : newSchedules) {
+                    if (isValid(schedule.getDate())) schedules.add(schedule);
+                }
+
                 mAdapter.notifyDataSetChanged();
 
                 Log.d(TAG, "onSchedules: " + newSchedules.size());
@@ -130,6 +135,14 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onFirebaseError: " + error);
             }
         }, checked);
+    }
+
+    private boolean isValid(String date) {
+        DateTime dateTime = DateTime.now();
+        String currentDate = dateTime.getYear() + "-" + dateTime.getMonthOfYear() + "-" + dateTime.getDayOfMonth();
+
+        int result = DateTimeComparator.getDateOnlyInstance().compare(currentDate, date);
+        return result == 0;
     }
 
 }

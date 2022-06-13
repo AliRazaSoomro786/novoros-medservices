@@ -18,6 +18,7 @@ public class SplashActivity extends AppCompatActivity {
 
         Executors.newSingleThreadScheduledExecutor().schedule(() ->{
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            finish();
         }, 3000, TimeUnit.MILLISECONDS);
     }
 }

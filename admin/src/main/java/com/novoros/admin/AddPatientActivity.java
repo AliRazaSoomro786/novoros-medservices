@@ -1,8 +1,6 @@
 package com.novoros.admin;
 
 import android.app.AlertDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -76,7 +74,7 @@ public class AddPatientActivity extends AppCompatActivity {
             hashMap.put(KEYS.description.toString(), description);
             hashMap.put(KEYS.date.toString(), selectedDate);
             hashMap.put(KEYS.time.toString(), sTime + " - " + eTime);
-            hashMap.put(KEYS.checked.toString(),false);
+            hashMap.put(KEYS.checked.toString(), false);
 
             FirebaseHelper.insert(hashMap, new FirebaseHelper.IFirebaseListener() {
                 @Override
@@ -109,7 +107,7 @@ public class AddPatientActivity extends AppCompatActivity {
 
         datePicker.setOnDateChangedListener((view, year, monthOfYear, dayOfMonth) -> {
             int month = monthOfYear + 1;
-            selectedDate = dayOfMonth + "-" + month + "-" + year;
+            selectedDate = year + "-" + month + "-" + dayOfMonth;
 
             dialog.dismiss();
         });
@@ -127,6 +125,7 @@ public class AddPatientActivity extends AppCompatActivity {
         final AlertDialog dialog = new AlertDialog.Builder(this).create();
 
         TimePicker timePicker = mView.findViewById(R.id.timePicker);
+        timePicker.setIs24HourView(true);
 
         timePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> {
             textView.setText(hourOfDay + " : " + minute);
