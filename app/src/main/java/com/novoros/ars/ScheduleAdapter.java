@@ -13,6 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.novoros.common.Schedule;
 
+import org.joda.time.DateTime;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -49,8 +54,17 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 //            if (position % 2 == 0)
 //                holder.itemView.setBackgroundResource(R.drawable.patient_item_bg_dark);
 
+            String endTime = schedule.getTime().split("-")[1].replace(" ", "");
+            String currentTime = DateTime.now().getHourOfDay() + ":" + DateTime.now().getMinuteOfHour();
+
+            if (cheTiming(currentTime, endTime))
+                Log.d(TAG, "Schedule time");
+            else
+                holder.itemView.setBackgroundResource(R.drawable.patient_item_bg_expired);
+
+
             holder.itemView.setOnClickListener(v -> {
-                if (checked) return;
+                if (checked || !cheTiming(currentTime, endTime)) return;
                 if (holder.normalGroup.getVisibility() == View.VISIBLE) {
                     holder.normalGroup.setVisibility(View.GONE);
                     holder.expandGroup.setVisibility(View.VISIBLE);
@@ -59,10 +73,11 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
                     holder.expandGroup.setVisibility(View.GONE);
                 }
 
+                notifyDataSetChanged();
 
             });
 
-            if (checked) {
+            if (checked || !cheTiming(currentTime, endTime)) {
                 holder.expandGroup.setVisibility(View.GONE);
                 holder.normalGroup.setVisibility(View.VISIBLE);
             }
@@ -78,6 +93,22 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         } catch (Exception e) {
             Log.e(TAG, "onBindViewHolder: ", e);
         }
+    }
+
+    private boolean cheTiming(String time, String endtime) {
+
+        String pattern = "HH:mm";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+
+        try {
+            Date date1 = sdf.parse(time);
+            Date date2 = sdf.parse(endtime);
+
+            return date1.before(date2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override

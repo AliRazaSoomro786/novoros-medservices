@@ -48,8 +48,8 @@ public class AddPatientActivity extends AppCompatActivity {
             String name = texture_name.getText().toString();
             String description = texture_description.getText().toString();
 
-            String sTime = startTime.getText().toString();
-            String eTime = endTime.getText().toString();
+            String sTime = startTime.getText().toString().replace(" ","");
+            String eTime = endTime.getText().toString().replace(" ","");
 
             if (name.isEmpty()) {
                 Toast.makeText(this, "Enter Patient Name", Toast.LENGTH_SHORT).show();
