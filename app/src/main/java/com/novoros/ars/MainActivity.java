@@ -1,5 +1,7 @@
 package com.novoros.ars;
 
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,12 +28,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TimeTickReceiver.ITimerTickReceiver {
 
     private final static String TAG = MainActivity.class.getSimpleName();
 
     private final List<Schedule> schedules = new ArrayList<>();
-
+    private final TimeTickReceiver mReceiver = new TimeTickReceiver(this);
     private ScheduleAdapter mAdapter;
     private ProgressBar mPb;
 
@@ -102,12 +104,22 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.view).setOnClickListener(v -> menu_group.setVisibility(View.GONE));
 
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_TIME_TICK);
+        registerReceiver(mReceiver, filter);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         loadSchedules(false);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mReceiver);
     }
 
     private void loadSchedules(boolean checked) {
@@ -160,4 +172,8 @@ public class MainActivity extends AppCompatActivity {
         return result == 0;
     }
 
+    @Override
+    public void onTimeChange() {
+        if (mAdapter != null) mAdapter.notifyDataSetChanged();
+    }
 }

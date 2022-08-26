@@ -11,7 +11,7 @@ android {
         minSdk 21
         targetSdk 32
         versionCode 1
-        versionName "1.0.2"
+        versionName "1.0.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -26,6 +26,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def project = "novors_admin"
+            def version = variant.versionName
+            def newApkName = project + version + ".apk"
+
+            outputFileName = new File(newApkName)
+        }
+    }
+
 }
 
 dependencies {

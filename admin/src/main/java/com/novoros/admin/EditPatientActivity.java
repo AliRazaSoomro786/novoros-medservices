@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -29,6 +28,9 @@ import java.util.concurrent.TimeUnit;
 public class EditPatientActivity extends AppCompatActivity {
     private final static String TAG = EditPatientActivity.class.getSimpleName();
     private String selectedDate = "";
+
+    private int minute = 0;
+    private int hour = 0;
 
 
     @Override
@@ -51,7 +53,7 @@ public class EditPatientActivity extends AppCompatActivity {
         texture_description.setText(Global.schedule.getDescription());
 
         startTime.setText(Global.split(0, Global.schedule.getTime()));
-        endTime.setText(Global.split(0, Global.schedule.getTime()));
+        endTime.setText(Global.split(1, Global.schedule.getTime()));
 
         selectedDate = Global.schedule.getDate();
 
@@ -150,29 +152,81 @@ public class EditPatientActivity extends AppCompatActivity {
     }
 
     private void timePicker(TextView textView) {
+        hour = 0;
+        minute = 0;
+
         LayoutInflater factory = LayoutInflater.from(this);
 
-        final View mView = factory.inflate(R.layout.time_picker, null);
+        final View mView = factory.inflate(R.layout.custom_timer_picker, null);
         final AlertDialog dialog = new AlertDialog.Builder(this).create();
 
-        TimePicker timePicker = mView.findViewById(R.id.timePicker);
-        timePicker.setIs24HourView(true);
+        TextView previewMinute = mView.findViewById(R.id.previewMinute);
+        TextView previewHour = mView.findViewById(R.id.preview_hour);
 
-        timePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> {
-            if (minute == 0) {
-                textView.setText(hourOfDay + ":" + 00);
+        mView.findViewById(R.id.actionIncrementHour).setOnClickListener(v -> {
+            if (hour == 23) {
+                hour = 0;
+                previewHour.setText("00");
                 return;
+            } else if (hour == 0) {
+                hour = 1;
+            } else {
+                hour = hour + 1;
             }
-            textView.setText(hourOfDay + ":" + minute);
+
+            if (hour > 9)
+                previewHour.setText("" + hour);
+            else previewHour.setText("0" + hour);
         });
 
-        mView.findViewById(R.id.actionNext).setOnClickListener(v -> dialog.dismiss());
+        mView.findViewById(R.id.actionDecrementHour).setOnClickListener(v -> {
+            if (hour == 0) {
+                hour = 23;
+            } else if (hour == 23) {
+                hour = 0;
+            } else {
+                hour = hour - 1;
+            }
+
+            if (hour > 9)
+                previewHour.setText("" + hour);
+            else previewHour.setText("0" + hour);
+        });
+
+        mView.findViewById(R.id.actionIncrementMinute).setOnClickListener(v -> {
+            if (minute == 60) {
+                Log.d(TAG, "onClick: " + minute);
+            } else {
+                minute = minute + 1;
+            }
+
+            previewMinute.setText("" + minute);
+        });
+
+        mView.findViewById(R.id.actiondecrementMinute).setOnClickListener(v -> {
+            if (minute == 0) {
+                Log.d(TAG, "onClick: " + minute);
+            } else {
+                minute = minute - 1;
+            }
+
+            previewMinute.setText("" + minute);
+
+        });
+
+        mView.findViewById(R.id.actionNextTime).setOnClickListener(v -> {
+            String time = DateTime.now().withHourOfDay(hour).withMinuteOfHour(minute).toString("HH:mm");
+            textView.setText(time);
+            dialog.dismiss();
+        });
 
         dialog.setView(mView);
-        dialog.setCancelable(false);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         dialog.show();
     }
+
 
     private void delete() {
         LayoutInflater factory = LayoutInflater.from(this);

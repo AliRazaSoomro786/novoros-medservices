@@ -1,6 +1,7 @@
 package com.novoros.admin;
 
 import android.app.AlertDialog;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,7 +9,6 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -25,8 +25,10 @@ import java.util.concurrent.TimeUnit;
 
 public class AddPatientActivity extends AppCompatActivity {
     private final static String TAG = AddPatientActivity.class.getSimpleName();
+    private final int number = 0;
+    private int minute = 0;
+    private int hour = 0;
     private String selectedDate = "";
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,8 +50,8 @@ public class AddPatientActivity extends AppCompatActivity {
             String name = texture_name.getText().toString();
             String description = texture_description.getText().toString();
 
-            String sTime = startTime.getText().toString().replace(" ","");
-            String eTime = endTime.getText().toString().replace(" ","");
+            String sTime = startTime.getText().toString().replace(" ", "");
+            String eTime = endTime.getText().toString().replace(" ", "");
 
             if (name.isEmpty()) {
                 Toast.makeText(this, "Enter Patient Name", Toast.LENGTH_SHORT).show();
@@ -135,27 +137,77 @@ public class AddPatientActivity extends AppCompatActivity {
     }
 
     private void timePicker(TextView textView) {
+        hour = 0;
+        minute = 0;
+
         LayoutInflater factory = LayoutInflater.from(this);
 
-        final View mView = factory.inflate(R.layout.time_picker, null);
+        final View mView = factory.inflate(R.layout.custom_timer_picker, null);
         final AlertDialog dialog = new AlertDialog.Builder(this).create();
 
-        TimePicker timePicker = mView.findViewById(R.id.timePicker);
-        timePicker.setIs24HourView(true);
+        TextView previewMinute = mView.findViewById(R.id.previewMinute);
+        TextView previewHour = mView.findViewById(R.id.preview_hour);
 
-        timePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> {
-            if (minute == 0) {
-                textView.setText(hourOfDay + ":" + 00);
+        mView.findViewById(R.id.actionIncrementHour).setOnClickListener(v -> {
+            if (hour == 23) {
+                hour = 0;
+                previewHour.setText("00");
                 return;
+            } else if (hour == 0) {
+                hour = 1;
+            } else {
+                hour = hour + 1;
             }
-            textView.setText(hourOfDay + ":" + minute);
-            Log.d(TAG, "timePicker: " + hourOfDay + " : " + minute);
+
+            if (hour > 9)
+                previewHour.setText("" + hour);
+            else previewHour.setText("0" + hour);
         });
 
-        mView.findViewById(R.id.actionNext).setOnClickListener(v -> dialog.dismiss());
+        mView.findViewById(R.id.actionDecrementHour).setOnClickListener(v -> {
+            if (hour == 0) {
+                hour = 23;
+            } else if (hour == 23) {
+                hour = 0;
+            } else {
+                hour = hour - 1;
+            }
+
+            if (hour > 9)
+                previewHour.setText("" + hour);
+            else previewHour.setText("0" + hour);
+        });
+
+        mView.findViewById(R.id.actionIncrementMinute).setOnClickListener(v -> {
+            if (minute == 60) {
+                Log.d(TAG, "onClick: " + minute);
+            } else {
+                minute = minute + 1;
+            }
+
+            previewMinute.setText("" + minute);
+        });
+
+        mView.findViewById(R.id.actiondecrementMinute).setOnClickListener(v -> {
+            if (minute == 0) {
+                Log.d(TAG, "onClick: " + minute);
+            } else {
+                minute = minute - 1;
+            }
+
+            previewMinute.setText("" + minute);
+
+        });
+
+        mView.findViewById(R.id.actionNextTime).setOnClickListener(v -> {
+            String time = DateTime.now().withHourOfDay(hour).withMinuteOfHour(minute).toString("HH:mm");
+            textView.setText(time);
+            dialog.dismiss();
+        });
 
         dialog.setView(mView);
-        dialog.setCancelable(false);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         dialog.show();
     }
